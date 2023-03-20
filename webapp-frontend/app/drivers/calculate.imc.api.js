@@ -36,8 +36,22 @@ function prepareAndFireRequest(person, req, callback) {
     }));
 }
 
+function prepareAndFireTableRequest(person, req, callback) {
+    req.open("GET", "http://localhost:3000/imc/table");
+    req.setRequestHeader("Content-Type", "application/json");
+    req.onreadystatechange = function() {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                callback(JSON.parse(this.responseText));
+            }
+        }
+    }.bind(req);
+    req.send();
+}
+
 export function calculateImcAPI(person, callback) {
     const req = createRequest();
     withLogger(req);
     prepareAndFireRequest(person, req, callback);
+    console.log(prepareAndFireTableRequest(person, req, callback));
 }
