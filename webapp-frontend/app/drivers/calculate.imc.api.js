@@ -36,7 +36,7 @@ function prepareAndFireRequest(person, req, callback) {
     }));
 }
 
-function prepareAndFireTableRequest(person, req, callback) {
+function prepareAndFireTableRequest( req, callback) {
     req.open("GET", "http://localhost:3000/imc/table");
     req.setRequestHeader("Content-Type", "application/json");
     req.onreadystatechange = function() {
@@ -54,4 +54,9 @@ export function calculateImcAPI(person, callback) {
     withLogger(req);
     prepareAndFireRequest(person, req, callback);
     console.log(prepareAndFireTableRequest(person, req, callback));
+}
+
+export function loadTableApi(callback){
+    const req = createRequest();
+    prepareAndFireTableRequest(req, callback);
 }
